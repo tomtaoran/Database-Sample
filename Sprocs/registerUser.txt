@@ -1,0 +1,14 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registerUser`(IN inUserName varchar(20),
+                            IN inPassword varchar(20))
+BEGIN
+	declare result varchar(50);
+	IF NOT EXISTS(Select * From Users WHERE inUserName = UserName) THEN
+	
+			Insert Into 
+			Users(UserName, Password, level)
+			Values(inUserName, saltedHash(inUserName, inPassword), 0);
+			SET result = 'User Created';
+           
+	ELSE SET result='UserID exists';
+	 END IF;
+END

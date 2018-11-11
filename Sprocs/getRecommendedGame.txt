@@ -1,0 +1,24 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getRecommendedGame`(IN inUserName varchar(20))
+BEGIN
+    Declare inUser int(11);
+    Select UserID Into inUser From Users Where UserName = inUserName;
+    If Exists (Select * From UserOwns Where UserID = inUser) THEN
+		Select Name
+		From UserOwns, Game, (Select GameType, Count(GameType) AS GenreCount 
+							From Game, UserOwns 
+                            Where UserID = inUser AND UserOwns.GameID = Game.GameID
+                            group by GameType
+                            ORDER BY GenreCount) AS TEMP
+		Where UserID = inUser AND Game.GameType = TEMP.GameType AND Game.GameID NOT IN (Select GameID From UserOwns Where UserID = inUser)
+		LIMIT 1;
+   Else
+		Select Name
+		From UserOwns, Game, (Select GameID, SUM(HoursPlayed) as hplayed
+			From UserOwns
+            Group by GameID
+            Order by hplayed Desc
+            LIMIT 1) AS TEMP
+        Where Game.GameID = TEMP.GameID
+        LIMIT 1;
+    END IF;
+    

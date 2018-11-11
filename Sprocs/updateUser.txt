@@ -1,0 +1,26 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateUser`(IN inUserNameOld varchar(20),
+							  IN inUserName varchar(20),
+							  IN inPassword varchar(20))
+BEGIN
+	declare result varchar(50);
+	Declare inUserID int;
+	Set inUserID = (Select UserID From Users Where inUserNameOld = UserName);
+    
+   IF (inUserName = null) THEN
+		SET inUserName = inUserNameOld;
+    END IF;
+   
+   IF (inPassword = null) THEN
+		SET inPassword = (Select Password From Users Where inUserID = UserID);
+    END IF;
+    
+    
+	IF NOT EXISTS(Select * From Users WHERE inUserName = UserName) THEN
+			UPDATE Users
+            SET UserName = inUserName, Password = inPassword
+            WHERE (UserID= inUserID);
+			SET result = 'User Info Updated';
+           
+	ELSE SET result='User Info Cannot Update Due to Duplicated User Name';
+	 END IF;
+END

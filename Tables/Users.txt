@@ -1,0 +1,10 @@
+CREATE TABLE `Users` (
+  `UserID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserName` varchar(20) NOT NULL,
+  `Password` varchar(20) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `AchievmentPoints` int(11) NOT NULL DEFAULT '0',
+  `GamesOwned` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`UserID`),
+  UNIQUE KEY `UserName` (`UserName`)
+) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=latin1;

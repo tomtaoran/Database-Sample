@@ -1,0 +1,15 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registerCompany`(IN cName varchar(30),
+                            IN cLocation varchar(50),
+                            IN sDate date)
+BEGIN
+	declare result varchar(50);
+	IF NOT EXISTS(Select * From Company WHERE cName = Name) THEN
+	
+			Insert Into 
+			Company(Name, Location, StartDate)
+			Values(cName, cLocation, sDate);
+			SET result = 'Company Created';
+           
+	ELSE SET result='Company exists';
+	 END IF;
+END

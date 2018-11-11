@@ -1,0 +1,20 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `newWishList`(IN inUserName varchar(20),
+                            IN inGame varchar(30))
+BEGIN
+	Declare inUserID int;
+    Declare inGameID int; 
+	declare result varchar(50);
+    Set inGameID = (Select GameID From Game Where inGame = Game.Name);   
+    Set inUserID = (Select UserID From Users Where inUserName = UserName);
+	IF NOT EXISTS(Select * From WishList WHERE inUserID = UserID AND inGameID = GameID) AND 
+		NOT EXISTS (Select * From WishList, UserOwns WHERE inUserID = UserOwns.UserID
+					AND inGameID = UserOwns.GameID) THEN
+	
+			Insert Into 
+			WishList(UserID, GameID)
+			Values(inUserID, inGameID);
+			SET result = 'WishList Created';
+           
+	ELSE SET result='WishList exists';
+	 END IF;
+END

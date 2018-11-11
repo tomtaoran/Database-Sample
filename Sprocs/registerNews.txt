@@ -1,0 +1,18 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registerNews`(IN ttle varchar(30),
+                            IN nDate date, 
+                            IN cName varchar(30),
+                            IN inGame varchar(30))
+BEGIN
+	declare result varchar(50);
+    Declare inGameID int(11);
+	Set inGameID = (Select GameID From Game Where Name= inGame);
+	IF NOT EXISTS(Select * From News WHERE Title = ttle) THEN
+	
+			Insert Into 
+			News(Title, NewsDate, CompanyName, GameID)
+			Values(ttle, nDate, cName, inGameID);
+			SET result = 'News Reported';
+           
+	ELSE SET result='Duplicate News ID';
+	 END IF;
+END

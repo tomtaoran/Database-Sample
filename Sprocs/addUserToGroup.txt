@@ -1,0 +1,16 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `addUserToGroup`(IN groupName varchar(30),
+                            IN inUserName varchar(20),
+                            IN userAdding varchar(20))
+BEGIN
+	declare inUserID int;
+    declare inGroupID int;
+    declare inAdderID int;
+    Select UserID Into inAdderID From Users Where UserName = userAdding;
+    Select UserID Into inUserID From Users Where UserName = inUserName;
+    Select GroupID Into inGroupID From Groups Where Name = groupName;
+    If inAdderID = (Select creator From Groups Where GroupID = inGroupID) THEN
+		Insert Into UserInGroup
+        Values(inUserID, inGroupID, 'Member');
+	END IF;
+
+END

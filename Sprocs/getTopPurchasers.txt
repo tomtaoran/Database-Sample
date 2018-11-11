@@ -1,0 +1,10 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTopPurchasers`(IN gameType varchar(30))
+BEGIN
+	SELECT * FROM (
+		SELECT UserName as User, Count(GameType) as NumTypePurchased, gameType as GameType
+		FROM UserOwns, Game, Users
+		Where UserOwns.GameID = Game.GameID and UserOwns.UserID = Users.UserID and Game.GameType = gameType
+		GROUP BY UserName, GameType)
+		AS Temp
+		ORDER BY Temp.NumTypePurchased DESC;
+END

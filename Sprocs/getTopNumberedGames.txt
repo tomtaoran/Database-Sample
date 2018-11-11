@@ -1,0 +1,11 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTopNumberedGames`(IN limiter int)
+BEGIN
+	SELECT Name FROM (
+		SELECT Name, SUM(HoursPlayed) AS THours
+		FROM Game, UserOwns
+		Where UserOwns.GameID = Game.GameID
+		GROUP BY Name)
+	AS Temp
+	ORDER BY Temp.THours DESC
+    Limit limiter;
+END

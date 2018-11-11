@@ -1,0 +1,15 @@
+CREATE TABLE `GameAccessory` (
+  `GameAccessoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(30) DEFAULT NULL,
+  `Price` double DEFAULT NULL,
+  `AccType` varchar(20) DEFAULT NULL,
+  `Rarity` varchar(20) DEFAULT NULL,
+  `Tradability` varchar(10) DEFAULT NULL,
+  `CompanyName` varchar(30) DEFAULT NULL,
+  `GameID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`GameAccessoryID`),
+  KEY `fk_GameAccessory_comp_idx` (`CompanyName`),
+  KEY `fk_GameAccessory_gameID_idx` (`GameID`),
+  CONSTRAINT `fk_GameAccessory_comp` FOREIGN KEY (`CompanyName`) REFERENCES `Company` (`Name`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_GameAccessory_gameID` FOREIGN KEY (`GameID`) REFERENCES `Game` (`GameID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

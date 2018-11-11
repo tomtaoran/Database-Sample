@@ -1,0 +1,19 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `newReview`(IN inUserName varchar(20),
+                            IN inGameName varchar(30),
+                            IN inRating int)
+BEGIN
+    Declare inUserID int;
+    Declare inGameID int; 
+	declare result varchar(50);
+    Set inGameID = (Select GameID From Game Where inGameName = Name);   
+    Set inUserID = (Select UserID From Users Where inUserName = UserName);
+	IF NOT EXISTS(Select * From Review WHERE UserID = inUserID AND GameID = inGameID) THEN
+	
+			Insert Into 
+			Review(UserID, GameID, Rating)
+			Values(inUserID, inGameID, inRating);
+			SET result = 'Review Created';
+           
+	ELSE SET result='User Already reviewed this game';
+	 END IF;
+END

@@ -1,0 +1,23 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTopHours`(IN gameType varchar(30))
+BEGIN
+	
+    IF gameType = null THEN
+		SELECT * FROM (
+			SELECT UserName AS User, SUM(HoursPlayed) AS THours, Count(Name) as TotalGamesOwned
+			FROM UserOwns, Game, Users
+			Where UserOwns.GameID = Game.GameID and UserOwns.UserID = Users.UserID
+            GROUP BY UserName)
+            AS Temp
+            WHERE Temp.THours >= 100
+            ORDER BY Temp.THours DESC;
+	ELSE 
+		SELECT * FROM (
+			SELECT UserName AS User, SUM(HoursPlayed) AS THours, Count(Name) as NumGameTypeOwned, gameType as GameType
+			FROM UserOwns, Game, Users
+			Where UserOwns.GameID = Game.GameID and UserOwns.UserID = Users.UserID and Game.GameType = gameType
+            GROUP BY UserName, GameType)
+            AS Temp
+            WHERE Temp.THours >= 100
+            ORDER BY Temp.THours DESC;
+	END IF;
+END

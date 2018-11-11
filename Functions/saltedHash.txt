@@ -1,0 +1,4 @@
+CREATE DEFINER=`root`@`localhost` FUNCTION `saltedHash`(username VARCHAR(255),
+                           password VARCHAR(255)) RETURNS binary(20)
+    DETERMINISTIC
+RETURN UNHEX(SHA1(CONCAT(username, password)))

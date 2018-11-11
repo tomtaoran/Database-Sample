@@ -1,0 +1,12 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loginUser`(IN inUsername VARCHAR(255),
+                            IN inPassword VARCHAR(255))
+BEGIN
+    DECLARE name VARCHAR(20);
+    DECLARE result VARCHAR(20);
+
+    SELECT UserName
+        FROM Users
+        WHERE UserName = inUsername
+        AND Password = saltedHash(inUsername, inPassword)
+        LIMIT 1;
+END

@@ -1,0 +1,12 @@
+CREATE TABLE `News` (
+  `NewsID` int(11) NOT NULL AUTO_INCREMENT,
+  `Title` varchar(30) DEFAULT NULL,
+  `NewsDate` date DEFAULT NULL,
+  `CompanyName` varchar(30) DEFAULT NULL,
+  `GameID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`NewsID`),
+  KEY `fk_News_company_idx` (`CompanyName`),
+  KEY `fk_News_gameID_idx` (`GameID`),
+  CONSTRAINT `fk_News_company` FOREIGN KEY (`CompanyName`) REFERENCES `Company` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_News_gameID` FOREIGN KEY (`GameID`) REFERENCES `Game` (`GameID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=321848917 DEFAULT CHARSET=latin1;

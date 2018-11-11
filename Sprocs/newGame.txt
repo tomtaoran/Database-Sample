@@ -1,0 +1,18 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `newGame`(IN inName varchar(30),
+							IN inPrice double,
+                            IN inGameType varchar(20),
+                            IN inReleaseDate DATE,
+                            IN inCreatorName varchar(30),
+                            IN inPublisherName varchar(30))
+BEGIN
+	declare result varchar(50);
+	IF NOT EXISTS(Select * From Game WHERE inName = Name) THEN
+	
+			Insert Into 
+			Game(Name, Price, GameType, ReleaseDate, CreatorName, PublisherName)
+			Values(inName, inPrice, inGameType, inReleaseDate, inCreatorName, inPublisherName);
+			SET result = 'Game Created';
+           
+	ELSE SET result='GameID exists';
+	 END IF;
+END

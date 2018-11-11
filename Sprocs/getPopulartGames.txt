@@ -1,0 +1,10 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPopularGames`()
+BEGIN
+	SELECT * FROM (
+		SELECT Name, SUM(HoursPlayed) AS THours
+		FROM Game, UserOwns
+		Where UserOwns.GameID = Game.GameID
+		GROUP BY Name)
+	AS Temp
+	ORDER BY Temp.THours DESC;
+END

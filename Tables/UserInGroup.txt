@@ -1,0 +1,9 @@
+CREATE TABLE `UserInGroup` (
+  `UserId` int(11) NOT NULL,
+  `GroupID` int(11) NOT NULL,
+  `position` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`UserId`,`GroupID`),
+  KEY `fk_UserInGroup_GroupID_idx` (`GroupID`),
+  CONSTRAINT `fk_UserInGroup_GroupID` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_UserInGroup_UserId` FOREIGN KEY (`UserId`) REFERENCES `Users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -1,0 +1,15 @@
+CREATE TABLE `TransactionIncludes` (
+  `SellerID` int(11) NOT NULL,
+  `BuyerID` int(11) NOT NULL,
+  `TradeID` int(11) NOT NULL,
+  `GameID` int(11) NOT NULL,
+  `Price` double DEFAULT NULL,
+  PRIMARY KEY (`SellerID`,`BuyerID`,`TradeID`,`GameID`),
+  KEY `fk_TransactionIncludes_BuyerID_idx` (`BuyerID`),
+  KEY `fk_TransactionIncludes_TradeID_idx` (`TradeID`),
+  KEY `fk_TransactionIncludes_GameID_idx` (`GameID`),
+  CONSTRAINT `fk_TransactionIncludes_BuyerID` FOREIGN KEY (`BuyerID`) REFERENCES `Users` (`UserID`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `fk_TransactionIncludes_GameID` FOREIGN KEY (`GameID`) REFERENCES `Game` (`GameID`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_TransactionIncludes_SellerID` FOREIGN KEY (`SellerID`) REFERENCES `Users` (`UserID`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `fk_TransactionIncludes_TradeID` FOREIGN KEY (`TradeID`) REFERENCES `Trade` (`tID`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

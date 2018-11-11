@@ -1,0 +1,14 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `newGroup`(IN inName varchar(30),
+                            IN inCreator varchar(30))
+BEGIN
+	declare result varchar(50);
+	declare inCreatorID int;
+    set inCreatorID= (Select UserID From Users Where inCreator = UserName);
+	IF NOT EXISTS(Select * From Groups WHERE Name = inname AND creator = (SELECT UserID From Users WHERE UserName = inCreator)) THEN
+			Insert Into 
+			Groups(Name, creator)
+			Values(inName, inCreatorID);
+			SET result = 'Group Created';
+	Else SET result = 'Group Already Exists';
+    End IF;
+END

@@ -1,0 +1,13 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `newAchievment`(IN newName varchar(30),
+                            IN inPoints int,
+                            IN inRarity varchar(20),
+                            IN inGame varchar(30))
+BEGIN
+Declare inGameID int;
+Set inGameID = (Select GameID From Game Where inGame = Name);
+Insert Into Achievment (Name, Points, Rarity, GameID)
+Values (newName, inPoints, inRarity, inGameID);
+
+           
+	
+END

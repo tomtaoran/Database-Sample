@@ -1,0 +1,11 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getWishList`(IN inUserName varchar(20))
+BEGIN
+
+	declare result varchar(50);
+	
+	declare inUserID int;
+    Select UserID Into inUserID From Users Where UserName = inUserName;
+    
+    Select Game.Name From WishList, Game Where UserID = inUserID AND Game.GameID = WishList.GameID;
+   
+ END

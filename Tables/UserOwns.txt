@@ -1,0 +1,10 @@
+CREATE TABLE `UserOwns` (
+  `UserID` int(11) NOT NULL,
+  `GameID` int(11) NOT NULL,
+  `HoursPlayed` int(11) DEFAULT '0',
+  `DatePurchased` date DEFAULT NULL,
+  PRIMARY KEY (`UserID`,`GameID`),
+  KEY `fk_UserOwns_GameID_idx` (`GameID`),
+  CONSTRAINT `fk_UserOwns_GameID` FOREIGN KEY (`GameID`) REFERENCES `Game` (`GameID`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_UserOwns_UserID` FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

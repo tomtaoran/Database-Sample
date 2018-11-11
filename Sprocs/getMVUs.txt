@@ -1,0 +1,10 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getMVUs`()
+BEGIN
+    
+    
+Select u.UserName, Round(Sum(g.Price), 2) as Worth, Sum(a.Points) as TotalPoints
+	From Users u, Game g, Achievment a, UserOwns uo, UserAchieved ua
+	Where g.GameID = uo.GameID and a.AchievID = ua.AchievID and u.UserID = uo.UserID and u.UserId = ua.UserID
+	group by UserName
+	order by Worth DESC, TotalPoints DESC;
+END

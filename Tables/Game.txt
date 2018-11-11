@@ -1,0 +1,15 @@
+CREATE TABLE `Game` (
+  `GameID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(30) NOT NULL,
+  `Price` double NOT NULL,
+  `GameType` varchar(20) DEFAULT NULL,
+  `ReleaseDate` date DEFAULT NULL,
+  `CreatorName` varchar(30) DEFAULT NULL,
+  `PublisherName` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`GameID`),
+  UNIQUE KEY `Name_UNIQUE` (`Name`),
+  KEY `fk_Game_dev_idx` (`CreatorName`),
+  KEY `fk_Game_pub_idx` (`PublisherName`),
+  CONSTRAINT `fk_Game_dev` FOREIGN KEY (`CreatorName`) REFERENCES `Company` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Game_pub` FOREIGN KEY (`PublisherName`) REFERENCES `Company` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=306 DEFAULT CHARSET=latin1;

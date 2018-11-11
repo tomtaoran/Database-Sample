@@ -1,0 +1,6 @@
+CREATE TABLE `Company` (
+  `Name` varchar(30) NOT NULL,
+  `Location` varchar(50) DEFAULT NULL,
+  `StartDate` date DEFAULT NULL,
+  PRIMARY KEY (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

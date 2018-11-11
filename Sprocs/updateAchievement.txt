@@ -1,0 +1,32 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateAchievement`(IN inName varchar(20),
+							  IN inPoints int,
+                              IN inRarity varchar(20),
+							  IN inGame varchar(30))
+BEGIN
+	declare result varchar(50);
+	Declare inGameID int;
+    Declare inAchievID int;
+    Set inAchievID = (Select AchievID From Achievment Where inName = Achievment.Name);
+    IF (inGame = null) THEN
+		SET inGame = (Select Game.Name From Game Where GameID = (Select GameID From Achievment Where inAchievID = AchievID));
+    END IF;
+    
+    Set inGameID = (Select GameID From Game Where inGame = Game.Name);
+    
+	IF (inPoints = null) THEN
+		SET inPoints = (Select Points From Achievment Where inAchievID = AchievID);
+    END IF;
+   
+	IF (inRarity = null) THEN
+		SET inRarity = (Select Rarity From Achievment Where inAchievID = AchievID);
+    END IF;
+    
+    IF EXISTS(Select * From Achievment WHERE inAchievID = AchievID) THEN
+			UPDATE Achievment
+            SET Points = inPoints, Rarity = inRarity, GameID = inGameID
+            WHERE (inAchievID = AchievID);
+			SET result = 'Game Achievement Info Updated';
+           
+	ELSE SET result='Game Achievement Not Found';
+	 END IF;
+END
